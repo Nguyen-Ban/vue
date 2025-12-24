@@ -1,0 +1,18 @@
+/* Migrated from html-css-js/assets/css/commons.css */
+/* Utility classes */
+.display-flex { display: flex; }
+.justify-content-center { justify-content: center; }
+.justify-content-between { justify-content: space-between; }
+.align-items-center { align-items: center; }
+.flex-direction-column { flex-direction: column; }
+.flex1 { flex: 1; }
+
+/* Gap utilities */
+.gap-8 { gap: 8px; }
+.gap-2 { gap: 2px; }
+.gap-4 { gap: 4px; }
+.gap-12 { gap: 12px; }
+.gap-16 { gap: 16px; }
+
+/* Text utilities */
+.text-align-center { text-align: center; }

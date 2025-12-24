@@ -1,0 +1,308 @@
+/* Migrated from html-css-js/assets/css/icons.css.
+   Note: URLs now point to /icons/* served from Vite public folder. */
+.icon {
+  mask-image: url("../icons/ICON.svg");
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  mask-repeat: no-repeat;
+  background-color: white;
+}
+
+.icon-default {
+  background: url("../icons/ICON.svg") no-repeat;
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+}
+
+.icon-sb-recruiment {
+  mask-image: url("../icons/ICON.svg");
+  mask-position: -94px -113px;
+  mask-repeat: no-repeat;
+  background-color: #c5ccd5;
+}
+.icon-sb-candidate {
+  mask-image: url("../icons/ICON.svg");
+  mask-position: -24px -112px;
+mask-repeat: no-repeat;
+  background-color: #c5ccd5;}
+.icon-sb-calendar {
+  mask-image: url("../icons/ICON.svg");
+  mask-position: -144px -113px;
+mask-repeat: no-repeat;
+  background-color: #c5ccd5;}
+
+.icon-logo {
+  margin-left: 24px;
+  margin-right: 10px;
+  background-image: url("../icons/logo-recruitment-new.d56a0096f9a2229b.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 32px;
+  height: 32px;
+  margin-top: 8px;
+}
+
+.icon-switch-app {
+  mask-image: url("../icons/icon-swich-app-white.248ca01677e3e31a.svg");
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  mask-repeat: no-repeat;
+}
+
+.icon-search {
+  mask-position: -1px -658px;
+  width: 17px;
+  height: 16px;
+  min-width: 17px;
+  background-color: #999;
+}
+
+.icon-global { background-position: 0px -608px; }
+
+.icon-notification-version {
+  background: url("../icons/icon-notification-version.d5e3dc604036ed5b.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 24px;
+  height: 24px;
+}
+
+.icon-cart {
+  background: url("../icons/cs-icon-store.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 20px;
+  height: 20px;
+}
+
+.icon-user-controlpanel {
+  width: 24px;
+  height: 24px;
+  transition: all 0.3s ease;
+  margin-right: 16px !important;
+  margin-top: 0 !important;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+.icon-user-invite { background-image: url("../icons/invite.svg"); }
+.icon-user-message { background-image: url("../icons/message.svg"); }
+.icon-notification-total-number { background-image: url("../icons/notification-total-number.svg"); }
+
+.mnoti-total-number {
+  background-color: #ff2929;
+  color: #fff;
+  position: absolute;
+  top: -4px;
+  right: -6px;
+  padding: 0 6px;
+  border-radius: 24px;
+  height: 16px;
+  line-height: 16px;
+  font-size: 10px;
+  user-select: none;
+  font-weight: 700;
+}
+
+.icon-help { background-image: url("../icons/icon-help.svg"); }
+.icon-more-menu { background-image: url("../icons/more-menu.svg"); }
+.icon-knowledge { background-image: url("../icons/knowledge.svg"); }
+
+.avatar-account {
+  border-radius: 50%;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  margin-right: 12px;
+  overflow: hidden;
+  border: none;
+}
+
+.icon-sb-talent-pools {
+  mask-image: url("../icons/ICON.svg");
+  mask-position: 0px -112px;
+  mask-repeat: no-repeat;
+  background-color: #c5ccd5;
+}
+.icon-sb-campaign {
+  mask-image: url("../icons/ICON.svg");
+  mask-position: -73px -633px;
+  mask-repeat: no-repeat;
+  background-color: #c5ccd5;
+}
+.icon-sb-task {
+  mask-image: url("../icons/ICON.svg");
+  mask-position: -336px -113px;
+  mask-repeat: no-repeat;
+  background-color: #c5ccd5;
+}
+.icon-sb-email {
+  mask-image: url("../icons/ICON.svg");
+  mask-position: -160px -248px;
+  mask-repeat: no-repeat;
+  background-color: #c5ccd5;
+}
+.icon-sb-chat {
+  mask-image: url("../icons/ICON.svg");
+  mask-position: -72px -845px;
+  mask-repeat: no-repeat;
+  background-color: #c5ccd5;
+}
+.icon-sb-report {
+  mask-image: url("../icons/ICON.svg");
+  mask-position: -72px -113px;
+  mask-repeat: no-repeat;
+  background-color: #c5ccd5;}
+.icon-sb-setting {
+  mask-image: url("../icons/ICON.svg");
+  mask-position: 0px -136px;
+  mask-repeat: no-repeat;
+  background-color: #c5ccd5;}
+.icon-sb-knowledge {
+  background-image: url("../icons/knowledge.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 24px;
+  height: 24px;
+}
+
+.icon-left {
+  mask-position: -60px -696px;
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+}
+
+.icon-left-pag {
+  mask-position: -60px -696px;
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  background-color: #7a8188;
+}
+.icon-right-pag {
+  mask-position: -40px -696px;
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  background-color: #7a8188;
+}
+
+.icon-add {
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  mask-position: -20px -656px;
+}
+
+.icon-arrow-down {
+  mask-position: -32px -48px;
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+}
+
+.ai-search-icon {
+  background-image: url("../icons/ai-search-candidate.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  position: relative;
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+}
+
+.ai-search-icon::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  /* Chuyển ảnh nền cũ vào đây */
+  background-image: url("../icons/ai-search-candidate.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+
+  /* Đặt animation quay tại đây */
+  animation: inspinFFF 20s linear infinite;
+}
+
+.ai-search-icon::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("../icons/ai-search-candidate-start.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.icon-toolbar {
+  mask-image: url("../icons/ICON.svg");
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  mask-repeat: no-repeat;
+  background-color: #7a8188;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+}
+
+.icon-filter {
+  mask-position: -40px -656px;
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+}
+
+.icon-export {
+  mask-position: -60px -656px;
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+}
+
+.icon-history { mask-position: 0px -844px; }
+.icon-toolbar-setting { mask-position: -24px -608px; }
+
+.icon-tick {
+  mask-position: -208px -32px;
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  background-color: #48bb56;
+}
+
+.input-icon-inside {
+  mask-position: -242px -658px;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #6b6b6b;
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  pointer-events: none;
+}
+
+@keyframes inspinFFF {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
