@@ -101,7 +101,7 @@
         <div class="paging-size-dropdown">
           <MsButton
             id="pageSizeSelect"
-            type="default"
+            type="primary"
             :icon="'icon icon-arrow-down'"
             position-icon="right"
             @click="togglePageSizeMenu"
@@ -180,6 +180,14 @@ function selectPageSize(value) {
 }
 </script>
 
+<style>
+.paging-size-btn .ms-button__content {
+  flex: 1;
+  text-align: left;
+  line-height: 1;
+}
+</style>
+
 <style scoped>
 /* Override MsInput to match original search styling */
 :deep(.search-input-wrapper .ms-input__field) {
@@ -202,7 +210,6 @@ function selectPageSize(value) {
   background-color: white !important;
   border: 1px solid #e0e0e0 !important;
   border-radius: 4px !important;
-  padding: 6px 28px 6px 10px !important;
   display: inline-flex !important;
   align-items: center !important;
   gap: 4px !important;
@@ -214,10 +221,7 @@ function selectPageSize(value) {
   box-sizing: border-box !important;
 }
 
-:deep(.paging-size-btn:hover) {
-  border-color: #999 !important;
-  background-color: #fafafa !important;
-}
+
 
 :deep(.paging-size-btn .ms-button__content) {
   flex: 1;
@@ -234,7 +238,8 @@ function selectPageSize(value) {
 
 .paging-size-menu {
   position: absolute;
-  top: calc(100% + 4px);
+  top: auto;
+  bottom: 100%;
   left: 0;
   right: 0;
   background-color: white;
@@ -251,7 +256,7 @@ function selectPageSize(value) {
   font-size: 14px;
   color: #333;
   transition: background-color 0.15s;
-  text-align: left;
+  text-align: center;
 }
 
 .paging-size-item:hover {
@@ -274,7 +279,7 @@ function selectPageSize(value) {
 
 :deep(.paging-nav-btn:disabled) {
   opacity: 0.5;
-  cursor: not-allowed;
+  cursor: pointer;
 }
 
 :deep(.paging-nav-btn .ms-button__icon) {

@@ -20,10 +20,12 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import { useStorage } from '../composables/useStorage';
 
 const emit = defineEmits(['update:active']);
 const storage = useStorage();
+const router = useRouter();
 
 const collapsed = ref(false);
 const activeIndex = ref(0);
@@ -50,6 +52,12 @@ function toggle() {
 function setActive(i) {
   activeIndex.value = i;
   storage.saveActiveSidebarIndex(i);
+  const routeMap = {
+    1: '/candidates',
+    9: '/testcomponent'
+  };
+  const target = routeMap[i];
+  if (target) router.push(target);
   emit('update:active', i);
 }
 

@@ -205,6 +205,15 @@ mask-repeat: no-repeat;
   width: 16px;
   height: 16px;
   min-width: 16px;
+  background-color: #7a8188;
+}
+
+.btn-group .icon-arrow-down {
+  mask-position: -32px -48px;
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  background-color: white;
 }
 
 .ai-search-icon {

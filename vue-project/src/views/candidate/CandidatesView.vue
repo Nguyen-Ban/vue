@@ -1,5 +1,4 @@
 <template>
-  <AppLayout>
     <div class="title-header display-flex justify-content-between align-items-center">
       <div class="title-left">Ứng viên</div>
       <div class="title-right">
@@ -26,12 +25,10 @@
     <CandidateTable />
 
     <ModalCandidate v-model="showModal" :candidate="editing" @saved="onSaved" />
-  </AppLayout>
 </template>
 
 <script setup>
 import { ref } from 'vue';
-import AppLayout from '../../layouts/AppLayout.vue';
 import CandidateTable from './CandidateTable.vue';
 import ModalCandidate from './CandidateForm.vue';
 
