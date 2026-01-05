@@ -1,0 +1,213 @@
+/* CandidateTable Component CSS */
+
+.title-header {
+  height: 50px;
+  justify-content: space-between;
+  padding: 16px 24px 0 24px;
+}
+
+.title-left {
+  font-size: 20px;
+  font-weight: 700;
+  color: #111;
+}
+
+.btn-group .btn {
+  margin: 0;
+  height: 36px;
+  border: none;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: #1E88E5;
+  color: #fff;
+}
+
+.btn-split-main {
+  border-radius: 4px 0 0 4px;
+  padding: 0 12px 0 10px;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  gap: 8px;
+  border-left: 1px solid #176cd1;
+}
+
+.btn-split-main span {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.btn-split-arrow {
+  border-radius: 0 4px 4px 0;
+  width: 36px;
+  padding-left: 8px;
+  border-left: 1px solid #176cd1;
+}
+
+.btn-split-main:hover,
+.btn-split-arrow:hover {
+  background-color: #1565C0;
+}
+
+.toolbar-wrapper {
+  background-color: #fff;
+  padding: 16px 24px 16px 24px;
+  min-height: 64px;
+  border: none;
+  border-radius: 4px 4px 0 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.toolbar-box {
+  background-color: #ffffff;
+  height: 35px;
+  padding: 8px;
+  border: 1px solid #e0e6ec;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.ai-search-container {
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toolbar-box:hover {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.search-box {
+  width: 320px;
+  height: 32px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 0 10px;
+  background: #fff;
+}
+
+.search-input {
+  border: none;
+  outline: none;
+  flex: 1;
+  margin-left: 8px;
+  font-size: 13px;
+  color: #7a8188;
+}
+
+.gird-container {
+  width: 100%;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.data-grid-container {
+  background-color: #fff;
+  border: none;
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  position: relative;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.data-table thead th {
+  background-color: #f5f5f5;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  padding: 0 10px;
+  height: 48px;
+  text-align: left;
+  font-weight: 700;
+  color: #111;
+  background-color: #f9fafb;
+  border: 1px solid #e0e6ec;
+  border-left: unset;
+  border-bottom: 1px solid #d4d4d4;
+}
+
+.col-checkbox {
+  width: 50px;
+  min-width: 50px;
+  max-width: 50px;
+  text-align: center !important;
+}
+
+.data-table tbody tr {
+  height: 48px;
+}
+
+.data-table tbody td {
+  padding: 10px;
+  border-top: none;
+  border-bottom: 1px solid #ddd;
+  border-right: none;
+  vertical-align: middle;
+  color: #1f1f1f;
+}
+
+.data-table tbody tr:hover td {
+  background-color: #f2f9ff;
+}
+
+.text-primary-bold {
+  font-weight: 600;
+  color: #1f1f1f;
+}
+
+.candidate-status {
+  color: #48bb56;
+  padding-left: 0.25rem;
+}
+
+.paging-footer {
+  height: 46px;
+  background-color: #f5f5f5;
+  flex-shrink: 0;
+  border-top: 1px solid #e0e0e0;
+  border-radius: 0 0 4px 4px;
+  padding: 0 16px;
+  margin-bottom: 16px;
+  z-index: 10;
+  box-sizing: border-box;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.paging-select {
+  height: 36px;
+  font-size: 14px;
+  border-radius: 4px;
+  outline: none;
+  border: 1px solid #e0e0e0;
+  background-color: #ffffff;
+}
+
+.btn-nav {
+  width: 24px;
+  height: 24px;
+  border: 1px solid #e0e0e0;
+  background: #fff;
+  cursor: pointer;
+  margin-left: 4px;
+  border-radius: 2px;
+}

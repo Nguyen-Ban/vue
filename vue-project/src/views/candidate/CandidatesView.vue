@@ -22,7 +22,7 @@
       </div>
     </div>
 
-    <CandidateTable />
+    <CandidateTable @edit="openEdit" />
 
     <ModalCandidate v-model="showModal" :candidate="editing" @saved="onSaved" />
 </template>
@@ -36,5 +36,6 @@ const showModal = ref(false);
 const editing = ref(null);
 
 function openAdd() { editing.value = null; showModal.value = true; }
+function openEdit(row) { editing.value = row; showModal.value = true; }
 function onSaved() { /* table reacts via composable state */ }
 </script>

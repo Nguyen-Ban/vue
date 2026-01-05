@@ -25,13 +25,15 @@
 .icon-sb-candidate {
   mask-image: url("../icons/ICON.svg");
   mask-position: -24px -112px;
-mask-repeat: no-repeat;
-  background-color: #c5ccd5;}
+  mask-repeat: no-repeat;
+  background-color: #c5ccd5;
+}
 .icon-sb-calendar {
   mask-image: url("../icons/ICON.svg");
   mask-position: -144px -113px;
-mask-repeat: no-repeat;
-  background-color: #c5ccd5;}
+  mask-repeat: no-repeat;
+  background-color: #c5ccd5;
+}
 
 .icon-logo {
   margin-left: 24px;
@@ -90,9 +92,15 @@ mask-repeat: no-repeat;
   background-repeat: no-repeat;
   cursor: pointer;
 }
-.icon-user-invite { background-image: url("../icons/invite.svg"); }
-.icon-user-message { background-image: url("../icons/message.svg"); }
-.icon-notification-total-number { background-image: url("../icons/notification-total-number.svg"); }
+.icon-user-invite {
+  background-image: url("../icons/invite.svg");
+}
+.icon-user-message {
+  background-image: url("../icons/message.svg");
+}
+.icon-notification-total-number {
+  background-image: url("../icons/notification-total-number.svg");
+}
 
 .mnoti-total-number {
   background-color: #ff2929;
@@ -109,9 +117,15 @@ mask-repeat: no-repeat;
   font-weight: 700;
 }
 
-.icon-help { background-image: url("../icons/icon-help.svg"); }
-.icon-more-menu { background-image: url("../icons/more-menu.svg"); }
-.icon-knowledge { background-image: url("../icons/knowledge.svg"); }
+.icon-help {
+  background-image: url("../icons/icon-help.svg");
+}
+.icon-more-menu {
+  background-image: url("../icons/more-menu.svg");
+}
+.icon-knowledge {
+  background-image: url("../icons/knowledge.svg");
+}
 
 .avatar-account {
   border-radius: 50%;
@@ -283,8 +297,21 @@ mask-repeat: no-repeat;
   min-width: 20px;
 }
 
-.icon-history { mask-position: 0px -844px; }
-.icon-toolbar-setting { mask-position: -24px -608px; }
+.icon-history {
+  mask-position: 0px -844px;
+}
+.icon-toolbar-setting {
+  mask-position: -24px -608px;
+}
+
+.icon-edit {
+  mask-image: url("../icons/ICON.svg");
+  mask-position: -1px -1px;
+  mask-repeat: no-repeat;
+  width: 13px;
+	height: 12px;
+  background-color: #c5ccd5;
+}
 
 .icon-tick {
   mask-position: -208px -32px;

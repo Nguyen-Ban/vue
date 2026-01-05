@@ -24,14 +24,14 @@
       </div>
     </div>
 
-    <div class="data-grid-container flex1">
+    <div class="data-grid-container flex1" v-if="filtered.length">
       <table class="data-table">
         <thead>
           <tr>
             <th class="col-checkbox" style="width: 50px"><input type="checkbox" /></th>
-            <th style="min-width: 327px;">Số điện thoại</th>
+            <th style="min-width: 327px;">Họ và tên</th>
             <th style="min-width: 150px;">Nguồn ứng viên</th>
-            <th style="min-width: 167px;">Họ và tên</th>
+            <th style="min-width: 167px;">Số điện thoại</th>
             <th style="min-width: 217px;">Email</th>
             <th style="min-width: 220px;">Chiến dịch tuyển dụng</th>
             <th style="min-width: 200px;">Vị trí tuyển dụng</th>
@@ -54,13 +54,12 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-if="!pageData.length"><td colspan="23" style="text-align:center; padding:20px">Không có dữ liệu</td></tr>
-          <tr v-for="item in pageData" :key="item.CandidateID">
+          <tr v-for="item in pageData" :key="item.CandidateID" class="table-row">
             <td class="col-checkbox text-align-center"><input type="checkbox" /></td>
-            <td>{{ safe(item.Mobile) }}</td>
-            <td>{{ safe(item.ChannelName ?? item.Source) }}</td>
+            <!-- Swap: show CandidateName in the first data column (under current header width) -->
             <td>
-              <div class="grid-cell display-flex align-items-center">
+              <div class="grid-cell display-flex align-items-center gap-8">
+                <div class="avatar-initials">{{ getInitials(item.CandidateName) }}</div>
                 <div class="cell-info display-flex flex-direction-column justify-content-center gap-2">
                   <div class="text-primary-bold">{{ safe(item.CandidateName) }}</div>
                   <div v-if="safe(displayStatus(item)) !== '--'" class="display-flex">
@@ -70,6 +69,9 @@
                 </div>
               </div>
             </td>
+            <td>{{ safe(item.ChannelName ?? item.Source) }}</td>
+            <!-- And show Mobile in the fourth column -->
+            <td>{{ safe(item.Mobile) }}</td>
             <td>{{ safe(item.Email) }}</td>
             <td>{{ safe(item.RecruitmentCampaignNames ?? item.Campaign) }}</td>
             <td>{{ safe(item.JobPositionName) }}</td>
@@ -89,12 +91,15 @@
             <td>{{ item.ProbationInfoStatus === 1 ? 'Đã gửi' : item.ProbationInfoStatus === 0 ? 'Chưa gửi' : '--' }}</td>
             <td>{{ safe(item.ChannelName ?? item.Source) }}</td>
             <td>{{ item.IsTalentPoolDetail === 1 ? 'Có' : item.IsTalentPoolDetail === 0 ? 'Không' : '--' }}</td>
+            <div class="row-edit-icon" @click="editRow(item)" title="Chỉnh sửa">
+              <div class="icon-edit"></div>
+            </div>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <div class="paging-footer display-flex justify-content-between align-items-center">
+    <div v-if="filtered.length" class="paging-footer display-flex justify-content-between align-items-center">
       <div class="paging-info">Tổng: <b id="totalRecord">{{ filtered.length }}</b> bản ghi</div>
       <div class="paging-ctrl display-flex align-items-center gap-8">
         <span>Số bản ghi/trang</span>
@@ -178,6 +183,20 @@ function selectPageSize(value) {
   pageSize.value = value;
   showPageSizeMenu.value = false;
 }
+
+const emit = defineEmits(['edit']);
+function editRow(item) {
+  emit('edit', item);
+}
+
+function getInitials(name) {
+  if (!name) return '--';
+  const words = name.trim().split(/\s+/);
+  if (words.length >= 2) {
+    return (words[0][0] + words[1][0]).toUpperCase();
+  }
+  return name.substring(0, 2).toUpperCase();
+}
 </script>
 
 <style>
@@ -198,6 +217,43 @@ function selectPageSize(value) {
 
 :deep(.search-input-wrapper .ms-input__field:focus) {
   border: none;
+}
+
+/* Search box layout tweaks so icon and text don't overlap or clip */
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 320px;
+  height: 36px;
+  padding: 0 12px;
+  box-sizing: border-box;
+}
+
+.ai-search-container {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+}
+
+:deep(.search-input-wrapper) {
+  width: 100%;
+}
+
+:deep(.search-input-wrapper .ms-input__field) {
+  width: 100%;
+  min-width: 0;
+  padding: 6px 0;
 }
 
 /* Page size dropdown styling */
@@ -234,6 +290,22 @@ function selectPageSize(value) {
   width: 12px !important;
   height: 12px !important;
   min-width: 12px !important;
+}
+
+/* Avatar initials styling */
+.avatar-initials {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 14px;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
 }
 
 .paging-size-menu {
@@ -284,5 +356,37 @@ function selectPageSize(value) {
 
 :deep(.paging-nav-btn .ms-button__icon) {
   margin: 0 !important;
+}
+
+/* Edit icon styling - sticky at right edge */
+.table-row {
+  position: relative;
+}
+
+.row-edit-icon {
+  display: none;
+  position: sticky;
+  top: 100%;
+  right: 8px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #666;
+  padding: 4px;
+  transition: color 0.2s;
+  width: 24px;
+  height: 24px;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  background-color: white;
+  border-radius: 4px;
+}
+
+.row-edit-icon:hover {
+  color: #1E88E5;
+}
+
+.table-row:hover .row-edit-icon {
+  display: inline-flex;
 }
 </style>
