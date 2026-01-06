@@ -1,8 +1,12 @@
 /**
+ * Utility: formatting helpers
+ * Created By Ban - 01/06/2026
+ */
+
+/**
  * Chuyển đổi giá trị null/undefined/empty thành '--'
  * @param {any} v - Giá trị cần chuyển đổi
  * @returns {string|any} - Giá trị gốc hoặc '--'
- * Created By Ban - 01/06/2026
  */
 export function safe(v) {
   return (v === null || v === undefined || v === '') ? '--' : v;
@@ -12,7 +16,6 @@ export function safe(v) {
  * Định dạng ngày từ ISO string sang định dạng Việt Nam (dd/MM/yyyy)
  * @param {String} iso - Ngày theo định dạng ISO
  * @returns {String} - Ngày theo định dạng Việt Nam hoặc '--' nếu không hợp lệ
- * Created By Ban - 01/06/2026
  */
 export function fmtDate(iso) {
   if (!iso) return '--';
@@ -25,8 +28,7 @@ export function fmtDate(iso) {
  * Ưu tiên: RecruitmentRoundName > CandidateStatusName > DisplayStatus > IsNew
  * @param {Object} item - Đối tượng ứng viên
  * @returns {String} - Trạng thái hiển thị
- * Created By Ban - 01/06/2026
  */
 export function displayStatus(item) {
-  return item.RecruitmentRoundName ?? item.CandidateStatusName ?? item.DisplayStatus ?? (item.IsNew ? 'Mới' : 'Ứng tuyển');
+  return item?.RecruitmentRoundName ?? item?.CandidateStatusName ?? item?.DisplayStatus ?? (item?.IsNew ? 'Mới' : 'Ứng tuyển');
 }

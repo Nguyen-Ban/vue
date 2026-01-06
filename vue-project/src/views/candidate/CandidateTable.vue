@@ -16,7 +16,15 @@
           </div>
         </div>
       </div>
-      <div class="toolbar-right display-flex gap-8">
+      <div class="toolbar-right display-flex gap-12">
+        <MsButton
+          v-if="selectedCount"
+          type="danger"
+          @click="confirmDeleteSelected"
+          class="delete-selected-btn"
+        >
+          Xóa đã chọn ({{ selectedCount }})
+        </MsButton>
         <div class="toolbar-box filter"><div class="icon-toolbar icon-filter"></div></div>
         <div class="toolbar-box export"><div class="icon-toolbar icon-export"></div></div>
         <div class="toolbar-box"><div class="icon-toolbar icon-history"></div></div>
@@ -28,7 +36,14 @@
       <table class="data-table">
         <thead>
           <tr>
-            <th class="col-checkbox" style="width: 50px; text-align: center;"><input type="checkbox" /></th>
+            <th class="col-checkbox" style="width: 50px; text-align: center;">
+              <input
+                type="checkbox"
+                :checked="allSelected"
+                :indeterminate="isIndeterminate"
+                @change="toggleSelectAll($event.target.checked)"
+              />
+            </th>
             <th style="min-width: 327px;">Họ và tên</th>
             <th style="min-width: 150px;">Nguồn ứng viên</th>
             <th style="min-width: 167px;">Số điện thoại</th>
@@ -55,7 +70,13 @@
         </thead>
         <tbody>
           <tr v-for="item in pageData" :key="item.CandidateID" class="table-row">
-            <td class="col-checkbox text-align-center"><input type="checkbox" /></td>
+            <td class="col-checkbox text-align-center">
+              <input
+                type="checkbox"
+                :checked="isSelected(item.CandidateID)"
+                @change="toggleRow(item.CandidateID, $event.target.checked)"
+              />
+            </td>
             <!-- Swap: show CandidateName in the first data column (under current header width) -->
             <td>
               <div class="grid-cell display-flex align-items-center gap-8">
@@ -152,12 +173,12 @@
 <script setup>
 import { ref, watch, computed } from 'vue';
 import { useCandidates } from '../../composables/useCandidates';
-import { safe, fmtDate, displayStatus } from '../../utils/formatter';
+import { safe, fmtDate, displayStatus } from '../../utils/format';
 import MsInput from '../../components/ms-input/MsInput.vue';
 import MsButton from '../../components/ms-button/MsButton.vue';
 
 // Lấy state và computed properties từ composable
-const { state, filtered, pageData, totalPages, pagingRangeText } = useCandidates();
+const { state, filtered, pageData, totalPages, pagingRangeText, deleteCandidates } = useCandidates();
 
 // Từ khóa tìm kiếm
 const keyword = ref(state.filterKeyword);
@@ -167,6 +188,14 @@ const pageSize = ref(state.pageSize);
 const currentPage = computed(() => state.currentPage);
 // Hiển thị menu chọn số bản ghi
 const showPageSizeMenu = ref(false);
+
+// Danh sách ID ứng viên được chọn
+const selectedIds = ref([]);
+
+// Trạng thái chọn tất cả / một phần
+const allSelected = computed(() => filtered.value.length > 0 && filtered.value.every(c => selectedIds.value.includes(c.CandidateID)));
+const selectedCount = computed(() => selectedIds.value.length);
+const isIndeterminate = computed(() => selectedCount.value > 0 && !allSelected.value);
 
 // Các tùy chọn kích thước trang
 const pageSizeOptions = [
@@ -179,6 +208,15 @@ const pageSizeOptions = [
 watch(keyword, (v) => { state.filterKeyword = v; state.currentPage = 1; });
 // Cập nhật kích thước trang và reset về trang 1
 watch(pageSize, (v) => { state.pageSize = v; state.currentPage = 1; });
+
+// Khi dữ liệu lọc thay đổi, loại bỏ các ID không còn tồn tại
+watch(filtered, (list) => {
+  const valid = new Set(list.map(c => c.CandidateID));
+  selectedIds.value = selectedIds.value.filter(id => valid.has(id));
+
+  const maxPage = Math.max(1, Math.ceil(list.length / state.pageSize));
+  if (state.currentPage > maxPage) state.currentPage = maxPage;
+});
 
 /**
  * Chuyển tới trang trước
@@ -205,6 +243,37 @@ function togglePageSizeMenu() {
 function selectPageSize(value) {
   pageSize.value = value;
   showPageSizeMenu.value = false;
+}
+
+// Kiểm tra checkbox đã chọn
+function isSelected(id) {
+  return selectedIds.value.includes(id);
+}
+
+// Chọn / bỏ chọn một hàng
+function toggleRow(id, checked) {
+  if (checked) {
+    if (!selectedIds.value.includes(id)) selectedIds.value = [...selectedIds.value, id];
+  } else {
+    selectedIds.value = selectedIds.value.filter(v => v !== id);
+  }
+}
+
+// Chọn / bỏ chọn toàn bộ (theo danh sách đã lọc hiện tại)
+function toggleSelectAll(checked) {
+  selectedIds.value = checked ? filtered.value.map(c => c.CandidateID) : [];
+}
+
+// Xác nhận và xóa các ứng viên đã chọn
+function confirmDeleteSelected() {
+  if (!selectedIds.value.length) return;
+  const message = selectedIds.value.length === filtered.value.length
+    ? 'Bạn có chắc muốn xóa tất cả ứng viên đã lọc?'
+    : `Bạn có chắc muốn xóa ${selectedIds.value.length} ứng viên đã chọn?`;
+  if (!window.confirm(message)) return;
+
+  deleteCandidates(selectedIds.value);
+  selectedIds.value = [];
 }
 
 // Emit sự kiện khi chỉnh sửa ứng viên
@@ -271,7 +340,7 @@ function getInitials(name) {
 </script>
 
 <style scoped>
-@import './CandidateTable.css';
+@import '../../assets/css/candidate/CandidateTable.css';
 
 /* Search input styling overrides */
 :deep(.search-input-wrapper .ms-input__field) {
@@ -291,5 +360,9 @@ function getInitials(name) {
 :deep(.search-input-wrapper .ms-input__field:focus) {
   border: none;
   background: rgba(0, 0, 0, 0.03);
+}
+
+:deep(.ms-button--primary:hover:not(:disabled)) {
+  background-color: #fff;
 }
 </style>

@@ -310,7 +310,7 @@
   mask-repeat: no-repeat;
   width: 13px;
 	height: 12px;
-  background-color: #c5ccd5;
+  background-color: black;
 }
 
 .icon-tick {
@@ -332,6 +332,16 @@
   height: 16px;
   min-width: 16px;
   pointer-events: none;
+}
+
+.icon-close {
+  mask-image: url("../icons/ICON.svg");
+  mask-position: -177px -81px;
+  mask-repeat: no-repeat;
+  width: 14px;
+	height: 14px;
+  cursor: pointer;
+  background-color: #c5ccd5;
 }
 
 @keyframes inspinFFF {

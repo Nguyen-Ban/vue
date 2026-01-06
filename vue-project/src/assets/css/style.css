@@ -354,7 +354,7 @@ textarea.form-control { height: auto; resize: vertical; min-height: 80px; }
 .input-group-append { width: 36px; height: 36px; border: 1px solid #d9d9d9; border-left: none; display: flex; align-items: center; justify-content: center; border-radius: 0 4px 4px 0; background-color: #fff; }
 .input-group-append .icon { background-color: #6b6b6b; }
 
-.toast-box { position: fixed; top: 16px; right: 16px; z-index: 2000; display: flex; flex-direction: column; gap: 8px; }
+.toast-box { position: fixed; bottom: 20px; right: 20px; z-index: 2000; display: flex; flex-direction: column; gap: 8px; align-items: flex-end; }
 .toast { display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 6px; color: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.15); animation: fadeIn 0.3s ease, stay 3s linear, fadeOut 0.5s ease 3s forwards; }
 .toast-success { background-color: #2e7d32; }
 .toast-error { background-color: #c62828; }

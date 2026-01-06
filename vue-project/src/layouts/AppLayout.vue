@@ -15,7 +15,7 @@
 import { ref } from 'vue';
 import Navbar from './TheNavbar.vue';
 import Sidebar from './TheSidebar.vue';
-import ToastHost from '../components/ToastHost.vue';
+import ToastHost from '../components/TheToast.vue';
 
 /**
  * Component AppLayout

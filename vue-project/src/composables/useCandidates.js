@@ -95,6 +95,21 @@ function saveCandidate(formData) {
 }
 
 /**
+ * Xóa nhiều ứng viên theo danh sách ID
+ * @param {Array<Number|String>} ids - Danh sách CandidateID cần xóa
+ */
+function deleteCandidates(ids = []) {
+  if (!Array.isArray(ids) || ids.length === 0) return;
+  const removeSet = new Set(ids);
+  state.candidates = state.candidates.filter(c => !removeSet.has(c.CandidateID));
+  storage.saveCandidates(state.candidates);
+
+  // Điều chỉnh trang hiện tại nếu vượt quá tổng trang mới
+  const pagesAfter = Math.max(1, Math.ceil(filtered.value.length / state.pageSize));
+  state.currentPage = Math.min(state.currentPage, pagesAfter);
+}
+
+/**
  * Composable useCandidates
  * Cung cấp state, dữ liệu phân trang, và hàm quản lý ứng viên
  * Created By Ban - 01/06/2026
@@ -109,5 +124,6 @@ export function useCandidates() {
     pagingRangeText,
     load,
     saveCandidate,
+    deleteCandidates,
   };
 }

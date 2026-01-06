@@ -18,7 +18,7 @@
           <div class="form-col-right">
             <div class="form-group">
               <label class="required">Họ và tên</label>
-              <BaseInput v-model="form.CandidateName" placeholder="Nhập họ và tên" />
+              <input v-model="form.CandidateName" placeholder="Nhập họ và tên" class="form-input" />
             </div>
             <!-- Ngày sinh & Giới tính -->
             <div class="form-row">
@@ -56,16 +56,16 @@
             <div class="form-row">
               <div class="form-group flex1">
                 <label>Số điện thoại</label>
-                <BaseInput v-model="form.Mobile" placeholder="Nhập số điện thoại" />
+                <input v-model="form.Mobile" placeholder="Nhập số điện thoại" class="form-input" />
               </div>
               <div class="form-group flex1">
                 <label class="required">Email</label>
-                <BaseInput v-model="form.Email" type="email" placeholder="Nhập Email" />
+                <input v-model="form.Email" type="email" placeholder="Nhập Email" class="form-input" />
               </div>
             </div>
             <div class="form-group">
               <label>Địa chỉ</label>
-              <BaseInput v-model="form.Address" placeholder="Nhập địa chỉ" />
+              <input v-model="form.Address" placeholder="Nhập địa chỉ" class="form-input" />
             </div>
 
             <!-- HỌC VẤN -->
@@ -102,7 +102,7 @@
               <div class="form-group flex1">
                 <label class="required">Ngày ứng tuyển</label>
                 <div class="input-group">
-                  <input v-model="form.ApplyDate" type="text" class="form-control">
+                  <input v-model="form.ApplyDate" type="text" placeholder="MM/yyyy" class="form-control">
                   <span class="icon input-icon-inside"></span>
                 </div>
               </div>
@@ -142,7 +142,7 @@
             <!-- Nơi làm việc gần đây -->
             <div class="form-group">
               <label>Nơi làm việc gần đây</label>
-              <BaseInput v-model="form.WorkPlaceRecent" placeholder="Nhập nơi làm việc gần đây" />
+              <input v-model="form.WorkPlaceRecent" placeholder="Nhập nơi làm việc gần đây" class="form-input" />
             </div>
 
             <div class="link-action" style="font-weight: 600; color: #1E88E5; margin-bottom: 12px;">+ Thêm kinh nghiệm làm việc</div>
@@ -151,7 +151,7 @@
             <div class="experience-block" style="padding-left: 0;">
               <div class="form-group">
                 <label>Nơi làm việc</label>
-                <BaseInput v-model="form.ExperiencePlace" placeholder="Nhập nơi làm việc" />
+                <input v-model="form.ExperiencePlace" placeholder="Nhập nơi làm việc" class="form-input" />
               </div>
 
               <div class="form-group">
@@ -171,12 +171,12 @@
 
               <div class="form-group">
                 <label>Vị trí công việc</label>
-                <BaseInput v-model="form.ExperiencePosition" placeholder="Nhập vị trí công việc" />
+                <input v-model="form.ExperiencePosition" placeholder="Nhập vị trí công việc" class="form-input" />
               </div>
 
               <div class="form-group">
                 <label>Mô tả công việc</label>
-                <textarea class="form-control" v-model="form.ExperienceDescription" placeholder="Nhập mô tả công việc"></textarea>
+                <textarea class="form-control form-textarea" v-model="form.ExperienceDescription" placeholder="Nhập mô tả công việc"></textarea>
               </div>
             </div>
           </div>
@@ -192,7 +192,6 @@
 
 <script setup>
 import { reactive, computed, watch } from 'vue';
-import BaseInput from '../../components/control/BaseInput.vue';
 import { useCandidates } from '../../composables/useCandidates';
 import { useToast } from '../../composables/useToast';
 
@@ -247,6 +246,32 @@ const form = reactive({
   CandidateStatusName: 'Ứng tuyển'
 });
 
+function resetForm() {
+  form.CandidateID = null;
+  form.CandidateName = '';
+  form.DateOfBirth = '';
+  form.Gender = '';
+  form.AreaName = '';
+  form.Mobile = '';
+  form.Email = '';
+  form.Address = '';
+  form.EducationDegreeName = '';
+  form.EducationPlaceName = '';
+  form.EducationMajorName = '';
+  form.ApplyDate = '';
+  form.ChannelName = '';
+  form.AttractivePersonnel = '';
+  form.Collaborator = '';
+  form.WorkPlaceRecent = '';
+  form.IsReferrer = false;
+  form.ExperiencePlace = '';
+  form.ExperienceStart = '';
+  form.ExperienceEnd = '';
+  form.ExperiencePosition = '';
+  form.ExperienceDescription = '';
+  form.CandidateStatusName = 'Ứng tuyển';
+}
+
 /**
  * Theo dõi thay đổi của props.candidate
  * Cập nhật form khi ứng viên được chọn hoặc reset khi không có ứng viên
@@ -279,30 +304,14 @@ watch(() => props.candidate, (c) => {
     form.ExperienceDescription = c.ExperienceDescription ?? '';
   } else {
     // Reset form khi không có ứng viên
-    form.CandidateID = null;
-    form.CandidateName = '';
-    form.DateOfBirth = '';
-    form.Gender = '';
-    form.AreaName = '';
-    form.Mobile = '';
-    form.Email = '';
-    form.Address = '';
-    form.EducationDegreeName = '';
-    form.EducationPlaceName = '';
-    form.EducationMajorName = '';
-    form.ApplyDate = '';
-    form.ChannelName = '';
-    form.AttractivePersonnel = '';
-    form.Collaborator = '';
-    form.WorkPlaceRecent = '';
-    form.IsReferrer = false;
-    form.ExperiencePlace = '';
-    form.ExperienceStart = '';
-    form.ExperienceEnd = '';
-    form.ExperiencePosition = '';
-    form.ExperienceDescription = '';
+    resetForm();
   }
 }, { immediate: true });
+
+// Khi mở modal ở trạng thái thêm mới (candidate = null), luôn reset form
+watch(show, (v) => {
+  if (v && !props.candidate) resetForm();
+});
 
 // Đóng modal
 function close() { show.value = false; }
@@ -341,5 +350,5 @@ function save() {
 }
 </script>
 <style scoped>
-@import './CandidateForm.css';
+@import '../../assets/css/candidate/CandidateForm.css';
 </style>
