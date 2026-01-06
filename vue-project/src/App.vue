@@ -5,6 +5,7 @@ import Navbar from './layouts/TheNavbar.vue';
 import Sidebar from './layouts/TheSidebar.vue';
 import ToastHost from './components/ToastHost.vue';
 
+// Lưu trạng thái sidebar được active hiện tại (mặc định là item 0)
 const activeSidebar = ref(0);
 </script>
 

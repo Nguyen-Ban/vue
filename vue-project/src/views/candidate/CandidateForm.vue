@@ -3,7 +3,7 @@
     <div class="modal-box" @click.stop>
       <div class="modal-header">
         <div class="modal-title">{{ isEdit ? 'Chỉnh sửa thông tin ứng viên' : 'Thêm ứng viên' }}</div>
-        <div class="icon-close" @click="close">×</div>
+        <div class="icon-close" @click="close"></div>
       </div>
       <div class="modal-body">
         <div class="upload-cv-box">
@@ -196,18 +196,31 @@ import BaseInput from '../../components/control/BaseInput.vue';
 import { useCandidates } from '../../composables/useCandidates';
 import { useToast } from '../../composables/useToast';
 
+/**
+ * Component CandidateForm
+ * Form modal thêm/chỉnh sửa thông tin ứng viên
+ * Created By Ban - 01/06/2026
+ */
+
+// Props: nhận trạng thái modal (v-model) và dữ liệu ứng viên
 const props = defineProps({
   modelValue: { type: Boolean, default: false },
   candidate: { type: Object, default: null },
 });
+// Emit: cập nhật trạng thái modal và khi lưu thành công
 const emit = defineEmits(['update:modelValue', 'saved']);
 
 const { saveCandidate } = useCandidates();
 const toast = useToast();
 
+// Đồng bộ hóa trạng thái modal với prop
 const show = computed({ get: () => props.modelValue, set: (v) => emit('update:modelValue', v) });
+// Kiểm tra xem đây có phải là chỉnh sửa không (có CandidateID)
 const isEdit = computed(() => !!(props.candidate && props.candidate.CandidateID));
 
+/**
+ * State quản lý dữ liệu form
+ */
 const form = reactive({
   CandidateID: null,
   CandidateName: '',
@@ -234,8 +247,14 @@ const form = reactive({
   CandidateStatusName: 'Ứng tuyển'
 });
 
+/**
+ * Theo dõi thay đổi của props.candidate
+ * Cập nhật form khi ứng viên được chọn hoặc reset khi không có ứng viên
+ * Created By Ban - 01/06/2026
+ */
 watch(() => props.candidate, (c) => {
   if (c) {
+    // Cập nhật từng trường từ dữ liệu ứng viên
     form.CandidateID = c.CandidateID ?? null;
     form.CandidateName = c.CandidateName ?? '';
     form.DateOfBirth = c.DateOfBirth ?? '';
@@ -259,6 +278,7 @@ watch(() => props.candidate, (c) => {
     form.ExperiencePosition = c.ExperiencePosition ?? '';
     form.ExperienceDescription = c.ExperienceDescription ?? '';
   } else {
+    // Reset form khi không có ứng viên
     form.CandidateID = null;
     form.CandidateName = '';
     form.DateOfBirth = '';
@@ -284,15 +304,42 @@ watch(() => props.candidate, (c) => {
   }
 }, { immediate: true });
 
+// Đóng modal
 function close() { show.value = false; }
+
+/**
+ * Xử lý sự kiện click overlay
+ * Đóng modal khi click ngoài vùng form
+ * @param {Event} e - Sự kiện click
+ * Created By Ban - 01/06/2026
+ */
 function onOverlay(e) { if (e.target === e.currentTarget) close(); }
 
+/**
+ * Lưu ứng viên
+ * Kiểm tra dữ liệu hợp lệ, lưu vào storage, hiển thị thông báo
+ * Created By Ban - 01/06/2026
+ */
 function save() {
-  if (!form.CandidateName.trim()) { toast.error('Vui lòng nhập họ tên!'); return; }
-  if (!form.Email.trim()) { toast.error('Vui lòng nhập Email!'); return; }
+  // Kiểm tra bắt buộc: họ tên
+  if (!form.CandidateName.trim()) {
+    toast.error('Vui lòng nhập họ tên!');
+    return;
+  }
+  // Kiểm tra bắt buộc: email
+  if (!form.Email.trim()) {
+    toast.error('Vui lòng nhập Email!');
+    return;
+  }
+  // Lưu dữ liệu
   saveCandidate({ ...form });
+  // Thông báo thành công
   toast.success(isEdit.value ? 'Cập nhật ứng viên thành công!' : 'Thêm mới ứng viên thành công!');
+  // Phát sự kiện và đóng modal
   emit('saved');
   close();
 }
 </script>
+<style scoped>
+@import './CandidateForm.css';
+</style>

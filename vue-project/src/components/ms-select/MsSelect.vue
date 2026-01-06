@@ -34,46 +34,51 @@
 </template>
 
 <script setup>
-//#region Props
+/**
+ * Component MsSelect
+ * Select dropdown với label, error message
+ * Hỗ trợ disabled, required validation
+ * Created By Ban - 01/06/2026
+ */
+
+// Props: Các tham số đầu vào
 defineProps({
   modelValue: {
     type: [String, Number],
-    default: ''
+    default: '' // Giá trị select
   },
   options: {
     type: Array,
-    default: () => []
+    default: () => [] // Danh sách options: [{value, label}, ...]
   },
   label: {
     type: String,
-    default: ''
+    default: '' // Nhãn hiển thị trên select
   },
   placeholder: {
     type: String,
-    default: ''
+    default: '' // Placeholder text
   },
   disabled: {
     type: Boolean,
-    default: false
+    default: false // Disable select
   },
   required: {
     type: Boolean,
-    default: false
+    default: false // Đánh dấu required
   },
   error: {
     type: Boolean,
-    default: false
+    default: false // Trạng thái lỗi
   },
   errorMessage: {
     type: String,
-    default: ''
+    default: '' // Tin nhắn lỗi
   }
 })
-//#endregion
 
-//#region Emits
+// Emit sự kiện v-model
 defineEmits(['update:modelValue'])
-//#endregion
 </script>
 
 <style scoped>

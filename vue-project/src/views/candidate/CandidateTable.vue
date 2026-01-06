@@ -28,7 +28,7 @@
       <table class="data-table">
         <thead>
           <tr>
-            <th class="col-checkbox" style="width: 50px"><input type="checkbox" /></th>
+            <th class="col-checkbox" style="width: 50px; text-align: center;"><input type="checkbox" /></th>
             <th style="min-width: 327px;">Họ và tên</th>
             <th style="min-width: 150px;">Nguồn ứng viên</th>
             <th style="min-width: 167px;">Số điện thoại</th>
@@ -59,7 +59,7 @@
             <!-- Swap: show CandidateName in the first data column (under current header width) -->
             <td>
               <div class="grid-cell display-flex align-items-center gap-8">
-                <div class="avatar-initials">{{ getInitials(item.CandidateName) }}</div>
+                <div class="avatar-initials" :style="{ backgroundColor: getAvatarColor(item.CandidateName) }">{{ getInitials(item.CandidateName) }}</div>
                 <div class="cell-info display-flex flex-direction-column justify-content-center gap-2">
                   <div class="text-primary-bold">{{ safe(item.CandidateName) }}</div>
                   <div v-if="safe(displayStatus(item)) !== '--'" class="display-flex">
@@ -91,9 +91,9 @@
             <td>{{ item.ProbationInfoStatus === 1 ? 'Đã gửi' : item.ProbationInfoStatus === 0 ? 'Chưa gửi' : '--' }}</td>
             <td>{{ safe(item.ChannelName ?? item.Source) }}</td>
             <td>{{ item.IsTalentPoolDetail === 1 ? 'Có' : item.IsTalentPoolDetail === 0 ? 'Không' : '--' }}</td>
-            <div class="row-edit-icon" @click="editRow(item)" title="Chỉnh sửa">
+            <td class="row-edit-icon" @click="editRow(item)" title="Chỉnh sửa">
               <div class="icon-edit"></div>
-            </div>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -156,39 +156,110 @@ import { safe, fmtDate, displayStatus } from '../../utils/formatter';
 import MsInput from '../../components/ms-input/MsInput.vue';
 import MsButton from '../../components/ms-button/MsButton.vue';
 
+// Lấy state và computed properties từ composable
 const { state, filtered, pageData, totalPages, pagingRangeText } = useCandidates();
 
+// Từ khóa tìm kiếm
 const keyword = ref(state.filterKeyword);
+// Số bản ghi mỗi trang
 const pageSize = ref(state.pageSize);
+// Trang hiện tại
 const currentPage = computed(() => state.currentPage);
+// Hiển thị menu chọn số bản ghi
 const showPageSizeMenu = ref(false);
 
+// Các tùy chọn kích thước trang
 const pageSizeOptions = [
   { value: 25, label: '25' },
   { value: 50, label: '50' },
   { value: 100, label: '100' }
 ];
 
+// Cập nhật từ khóa lọc và reset về trang 1
 watch(keyword, (v) => { state.filterKeyword = v; state.currentPage = 1; });
+// Cập nhật kích thước trang và reset về trang 1
 watch(pageSize, (v) => { state.pageSize = v; state.currentPage = 1; });
 
+/**
+ * Chuyển tới trang trước
+ * Created By Ban - 01/06/2026
+ */
 function prev() { if (state.currentPage > 1) state.currentPage -= 1; }
+
+/**
+ * Chuyển tới trang tiếp theo
+ * Created By Ban - 01/06/2026
+ */
 function next() { if (state.currentPage < totalPages.value) state.currentPage += 1; }
 
+// Bật/tắt menu chọn kích thước trang
 function togglePageSizeMenu() {
   showPageSizeMenu.value = !showPageSizeMenu.value;
 }
 
+/**
+ * Chọn kích thước trang và đóng menu
+ * @param {Number} value - Kích thước trang được chọn
+ * Created By Ban - 01/06/2026
+ */
 function selectPageSize(value) {
   pageSize.value = value;
   showPageSizeMenu.value = false;
 }
 
+// Emit sự kiện khi chỉnh sửa ứng viên
 const emit = defineEmits(['edit']);
+
+// Màu sắc palette cho avatar
+const AVATAR_COLORS = [
+  '#FF6B6B', // Đỏ
+  '#FFA500', // Cam
+  '#FFD93D', // Vàng
+  '#6BCB77', // Xanh lá
+  '#4D96FF', // Xanh dương
+  '#9B59B6', // Tím
+  '#E91E63', // Hồng
+  '#00BCD4', // Cyan
+  '#FF7043', // Đỏ cam
+  '#29B6F6'  // Xanh biển
+];
+
+/**
+ * Generate màu avatar từ tên (nhất quán cho mỗi tên)
+ * @param {String} name - Tên ứng viên
+ * @returns {String} - Mã màu hex
+ * Created By Ban - 01/06/2026
+ */
+function getAvatarColor(name) {
+  if (!name) return AVATAR_COLORS[0];
+
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) {
+    const char = name.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash; // Convert to 32bit integer
+  }
+
+  const colorIndex = Math.abs(hash) % AVATAR_COLORS.length;
+  return AVATAR_COLORS[colorIndex];
+}
+
+/**
+ * Xử lý sự kiện chỉnh sửa hàng
+ * @param {Object} item - Dữ liệu ứng viên được chọn
+ * Created By Ban - 01/06/2026
+ */
 function editRow(item) {
   emit('edit', item);
 }
 
+/**
+ * Lấy ký tự đầu của tên ứng viên để hiển thị avatar
+ * Nếu có 2 từ trở lên: lấy ký tự đầu của 2 từ đầu tiên
+ * @param {String} name - Tên ứng viên
+ * @returns {String} - Ký tự viết hoa (2 ký tự max)
+ * Created By Ban - 01/06/2026
+ */
 function getInitials(name) {
   if (!name) return '--';
   const words = name.trim().split(/\s+/);
@@ -199,194 +270,26 @@ function getInitials(name) {
 }
 </script>
 
-<style>
-.paging-size-btn .ms-button__content {
-  flex: 1;
-  text-align: left;
-  line-height: 1;
-}
-</style>
-
 <style scoped>
-/* Override MsInput to match original search styling */
+@import './CandidateTable.css';
+
+/* Search input styling overrides */
 :deep(.search-input-wrapper .ms-input__field) {
   border: none;
-  background: transparent;
-  padding: 0;
+  padding: 8px 12px;
+  font-size: 13px;
+  width: 100%;
+  min-width: 200px;
+}
+
+:deep(.search-input-wrapper .ms-input__field::placeholder) {
+  color: #7a8188;
+  opacity: 1;
+  font-size: 13px;
 }
 
 :deep(.search-input-wrapper .ms-input__field:focus) {
   border: none;
-}
-
-/* Search box layout tweaks so icon and text don't overlap or clip */
-.search-box {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 320px;
-  height: 36px;
-  padding: 0 12px;
-  box-sizing: border-box;
-}
-
-.ai-search-container {
-  flex-shrink: 0;
-  width: 28px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.search-content {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  align-items: center;
-}
-
-:deep(.search-input-wrapper) {
-  width: 100%;
-}
-
-:deep(.search-input-wrapper .ms-input__field) {
-  width: 100%;
-  min-width: 0;
-  padding: 6px 0;
-}
-
-/* Page size dropdown styling */
-.paging-size-dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-:deep(.paging-size-btn) {
-  background-color: white !important;
-  border: 1px solid #e0e0e0 !important;
-  border-radius: 4px !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 4px !important;
-  font-size: 14px !important;
-  color: #333 !important;
-  cursor: pointer !important;
-  min-width: 65px !important;
-  height: 36px !important;
-  box-sizing: border-box !important;
-}
-
-
-
-:deep(.paging-size-btn .ms-button__content) {
-  flex: 1;
-  text-align: left;
-  line-height: 1;
-}
-
-:deep(.paging-size-btn .ms-button__icon) {
-  margin: 0 0 0 4px !important;
-  width: 12px !important;
-  height: 12px !important;
-  min-width: 12px !important;
-}
-
-/* Avatar initials styling */
-.avatar-initials {
-  flex-shrink: 0;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-  font-size: 14px;
-  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
-}
-
-.paging-size-menu {
-  position: absolute;
-  top: auto;
-  bottom: 100%;
-  left: 0;
-  right: 0;
-  background-color: white;
-  border: 1px solid #e0e0e0;
-  border-radius: 4px;
-  z-index: 1000;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  overflow: hidden;
-}
-
-.paging-size-item {
-  padding: 8px 12px;
-  cursor: pointer;
-  font-size: 14px;
-  color: #333;
-  transition: background-color 0.15s;
-  text-align: center;
-}
-
-.paging-size-item:hover {
-  background-color: #f5f5f5;
-}
-
-.paging-size-item--active {
-  background-color: #e8f4fd;
-  color: #1976d2;
-  font-weight: 500;
-}
-
-/* Override MsButton to match paging nav styling */
-:deep(.paging-nav-btn) {
-  background: none !important;
-  padding: 0 !important;
-  border: none !important;
-  cursor: pointer;
-}
-
-:deep(.paging-nav-btn:disabled) {
-  opacity: 0.5;
-  cursor: pointer;
-}
-
-:deep(.paging-nav-btn .ms-button__icon) {
-  margin: 0 !important;
-}
-
-/* Edit icon styling - sticky at right edge */
-.table-row {
-  position: relative;
-}
-
-.row-edit-icon {
-  display: none;
-  position: sticky;
-  top: 100%;
-  right: 8px;
-  transform: translateY(-50%);
-  cursor: pointer;
-  color: #666;
-  padding: 4px;
-  transition: color 0.2s;
-  width: 24px;
-  height: 24px;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
-  background-color: white;
-  border-radius: 4px;
-}
-
-.row-edit-icon:hover {
-  color: #1E88E5;
-}
-
-.table-row:hover .row-edit-icon {
-  display: inline-flex;
+  background: rgba(0, 0, 0, 0.03);
 }
 </style>

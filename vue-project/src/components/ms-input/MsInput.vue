@@ -30,58 +30,63 @@
 </template>
 
 <script setup>
-//#region Props
+/**
+ * Component MsInput
+ * Input field với label, icon, error message
+ * Hỗ trợ readonly, disabled, required validation
+ * Created By Ban - 01/06/2026
+ */
+
+// Props: Các tham số đầu vào
 defineProps({
   modelValue: {
     type: [String, Number],
-    default: ''
+    default: '' // Giá trị input
   },
   type: {
     type: String,
-    default: 'text'
+    default: 'text' // Loại input (text, email, password, etc.)
   },
   label: {
     type: String,
-    default: ''
+    default: '' // Nhãn hiển thị trên input
   },
   placeholder: {
     type: String,
-    default: ''
+    default: '' // Placeholder text
   },
   prefixIcon: {
     type: [String, Object],
-    default: null
+    default: null // Icon hiển thị bên trái input
   },
   suffixIcon: {
     type: [String, Object],
-    default: null
+    default: null // Icon hiển thị bên phải input
   },
   disabled: {
     type: Boolean,
-    default: false
+    default: false // Disable input
   },
   readonly: {
     type: Boolean,
-    default: false
+    default: false // Chỉ đọc, không thể chỉnh sửa
   },
   required: {
     type: Boolean,
-    default: false
+    default: false // Đánh dấu required
   },
   error: {
     type: Boolean,
-    default: false
+    default: false // Trạng thái lỗi
   },
   errorMessage: {
     type: String,
-    default: ''
+    default: '' // Tin nhắn lỗi
   }
 })
-//#endregion
 
-//#region Emits
+// Emit sự kiện v-model
 defineEmits(['update:modelValue'])
-//#endregion
 </script>
 
 <style scoped>

@@ -14,28 +14,33 @@
 </template>
 
 <script setup>
-//#region Props
+/**
+ * Component MsButton
+ * Nút bấm với hỗ trợ icon và các loại button khác nhau
+ * Created By Ban - 01/06/2026
+ */
+
+// Props: Các tham số đầu vào
 defineProps({
   icon: {
-    // Pass any project-specific icon class (e.g., 'icon icon-plus')
+    // Icon class (e.g., 'icon icon-plus')
     type: [String, Object],
-    default: null,
+    default: null, // Hiển thị icon
   },
   positionIcon: {
     type: String,
-    default: 'left',
+    default: 'left', // Vị trí icon: left hoặc right
     validator: (value) => ['left', 'right'].includes(value)
   },
   type: {
     type: String,
-    default: 'primary'
+    default: 'primary' // Loại button: primary, link, warning, danger, etc.
   },
   disabled: {
     type: Boolean,
-    default: false
+    default: false // Disable button
   }
 })
-//#endregion
 </script>
 
 <style scoped>

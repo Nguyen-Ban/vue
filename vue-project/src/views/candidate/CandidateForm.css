@@ -46,9 +46,13 @@
 }
 
 .icon-close {
-  font-size: 20px;
+  mask-image: url("../../assets/icons/ICON.svg");
+  mask-position: -177px -81px;
+  mask-repeat: no-repeat;
+  width: 14px;
+	height: 14px;
   cursor: pointer;
-  color: #999;
+  background-color: #c5ccd5;
 }
 
 .modal-body {

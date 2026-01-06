@@ -39,5 +39,12 @@
 </template>
 
 <script setup>
-// purely presentational, matches original header UI
+/**
+ * Component TheNavbar
+ * Thanh navbar trên cùng của ứng dụng
+ * Gồm: logo, tên app, thanh tìm kiếm, các nút tiện ích
+ * Created By Ban - 01/06/2026
+ */
+
+// Purely presentational, matches original header UI
 </script>

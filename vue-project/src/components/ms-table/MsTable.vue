@@ -68,41 +68,50 @@
 <script setup>
 import { ref } from 'vue'
 
-//#region Props
+/**
+ * Component MsTable
+ * Bảng dữ liệu với support sắp xếp
+ * Hỗ trợ custom cell render via slots
+ * Created By Ban - 01/06/2026
+ */
+
+// Props: Các tham số đầu vào
 defineProps({
   columns: {
     type: Array,
-    required: true
+    required: true // Danh sách cột: [{key, label, width, minWidth, sortable}, ...]
   },
   data: {
     type: Array,
-    default: () => []
+    default: () => [] // Dữ liệu hàng
   },
   rowKey: {
     type: String,
-    default: 'id'
+    default: 'id' // Khóa duy nhất của mỗi hàng
   },
   emptyText: {
     type: String,
-    default: 'Không có dữ liệu'
+    default: 'Không có dữ liệu' // Text khi bảng trống
   },
   pagination: {
     type: Boolean,
-    default: false
+    default: false // Hiển thị phân trang
   }
 })
-//#endregion
 
-//#region Emits
+// Emit sự kiện sort
 const emit = defineEmits(['sort'])
-//#endregion
 
-//#region State
-const sortBy = ref(null)
+// State
+const sortBy = ref(null) // Cột đang sort
 const sortOrder = ref(null) // 'asc' | 'desc' | null
-//#endregion
 
-//#region Methods
+/**
+ * Xử lý sự kiện sort khi click vào header
+ * Cycle: asc -> desc -> null (unsorted)
+ * @param {String} key - Khóa cột
+ * Created By Ban - 01/06/2026
+ */
 const handleSort = (key) => {
   if (sortBy.value === key) {
     // Cycle through: asc -> desc -> null
@@ -119,16 +128,22 @@ const handleSort = (key) => {
     sortOrder.value = 'asc'
   }
 
+  // Emit sự kiện sort
   emit('sort', { key: sortBy.value, order: sortOrder.value })
 }
 
+/**
+ * Lấy icon hiển thị trạng thái sort của cột
+ * @param {String} key - Khóa cột
+ * @returns {String} - Icon sort
+ * Created By Ban - 01/06/2026
+ */
 const getSortIcon = (key) => {
   if (sortBy.value !== key) {
-    return '⇅'
+    return '⇅' // Unsorted icon
   }
-  return sortOrder.value === 'asc' ? '▲' : '▼'
+  return sortOrder.value === 'asc' ? '▲' : '▼' // Ascending or Descending
 }
-//#endregion
 </script>
 
 <style scoped>

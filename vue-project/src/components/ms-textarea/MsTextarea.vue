@@ -32,58 +32,63 @@
 </template>
 
 <script setup>
-//#region Props
+/**
+ * Component MsTextarea
+ * Textarea với label, error message, character counter
+ * Hỗ trợ disabled, readonly, required, maxlength
+ * Created By Ban - 01/06/2026
+ */
+
+// Props: Các tham số đầu vào
 defineProps({
   modelValue: {
     type: [String, Number],
-    default: ''
+    default: '' // Giá trị textarea
   },
   label: {
     type: String,
-    default: ''
+    default: '' // Nhãn hiển thị trên textarea
   },
   placeholder: {
     type: String,
-    default: ''
+    default: '' // Placeholder text
   },
   rows: {
     type: Number,
-    default: 4
+    default: 4 // Số hàng hiển thị
   },
   cols: {
     type: Number,
-    default: null
+    default: null // Số cột
   },
   maxlength: {
     type: Number,
-    default: null
+    default: null // Giới hạn số ký tự
   },
   disabled: {
     type: Boolean,
-    default: false
+    default: false // Disable textarea
   },
   readonly: {
     type: Boolean,
-    default: false
+    default: false // Chỉ đọc, không thể chỉnh sửa
   },
   required: {
     type: Boolean,
-    default: false
+    default: false // Đánh dấu required
   },
   error: {
     type: Boolean,
-    default: false
+    default: false // Trạng thái lỗi
   },
   errorMessage: {
     type: String,
-    default: ''
+    default: '' // Tin nhắn lỗi
   }
 })
-//#endregion
 
-//#region Emits
+// Emit sự kiện v-model
 defineEmits(['update:modelValue'])
-//#endregion
 </script>
 
 <style scoped>

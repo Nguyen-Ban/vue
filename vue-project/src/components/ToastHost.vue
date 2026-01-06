@@ -11,6 +11,13 @@
 import { computed } from 'vue';
 import { useToast } from '../composables/useToast';
 
+/**
+ * Component ToastHost
+ * Hiển thị danh sách toast notifications (thành công/lỗi)
+ * Created By Ban - 01/06/2026
+ */
+
 const { state } = useToast();
+// Danh sách toast hiện tại
 const toasts = computed(() => state.toasts);
 </script>

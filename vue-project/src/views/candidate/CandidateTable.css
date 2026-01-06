@@ -1,55 +1,44 @@
-/* CandidateTable Component CSS */
+/* ===================================
+   Layout & Container
+   =================================== */
 
-.title-header {
-  height: 50px;
-  justify-content: space-between;
-  padding: 16px 24px 0 24px;
+/**
+ * Main grid container
+ */
+.gird-container {
+  width: 100%;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
 }
 
-.title-left {
-  font-size: 20px;
-  font-weight: 700;
-  color: #111;
-}
-
-.btn-group .btn {
-  margin: 0;
-  height: 36px;
+/**
+ * Data grid container
+ * Scrollable container for the table
+ */
+.data-grid-container {
+  background-color: #fff;
   border: none;
-  box-shadow: none;
-  cursor: pointer;
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  position: relative;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
 }
 
-.btn-primary {
-  background-color: #1E88E5;
-  color: #fff;
-}
+/* ===================================
+   Toolbar Section
+   =================================== */
 
-.btn-split-main {
-  border-radius: 4px 0 0 4px;
-  padding: 0 12px 0 10px;
-  border-right: 1px solid rgba(0, 0, 0, 0.1);
-  gap: 8px;
-  border-left: 1px solid #176cd1;
-}
-
-.btn-split-main span {
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-.btn-split-arrow {
-  border-radius: 0 4px 4px 0;
-  width: 36px;
-  padding-left: 8px;
-  border-left: 1px solid #176cd1;
-}
-
-.btn-split-main:hover,
-.btn-split-arrow:hover {
-  background-color: #1565C0;
-}
-
+/**
+ * Toolbar wrapper
+ * Top bar container with search and action buttons
+ */
 .toolbar-wrapper {
   background-color: #fff;
   padding: 16px 24px 16px 24px;
@@ -59,6 +48,9 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
+/**
+ * Toolbar action buttons
+ */
 .toolbar-box {
   background-color: #ffffff;
   height: 35px;
@@ -73,26 +65,45 @@
   transition: all 0.2s ease;
 }
 
+.toolbar-box:hover {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Search box */
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 380px;
+  height: 36px;
+  padding: 0 12px;
+  box-sizing: border-box;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  background: #fff;
+}
+
+/* AI search icon container */
 .ai-search-container {
-  height: 32px;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.toolbar-box:hover {
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+/* Search content wrapper */
+.search-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
 }
 
-.search-box {
-  width: 320px;
-  height: 32px;
-  border: 1px solid #e0e0e0;
-  border-radius: 4px;
-  padding: 0 10px;
-  background: #fff;
-}
-
+/**
+ * Search input field
+ */
 .search-input {
   border: none;
   outline: none;
@@ -102,36 +113,25 @@
   color: #7a8188;
 }
 
-.gird-container {
-  width: 100%;
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  overflow: hidden;
-  min-height: 0;
-}
+/* ===================================
+   Table Styles
+   =================================== */
 
-.data-grid-container {
-  background-color: #fff;
-  border: none;
-  display: flex;
-  flex: 1;
-  min-width: 0;
-  min-height: 0;
-  overflow: auto;
-  position: relative;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
-}
-
+/**
+ * Data table base styles
+ */
 .data-table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
 }
 
+/**
+ * Table header
+ * Sticky header with column titles
+ */
 .data-table thead th {
-  background-color: #f5f5f5;
+  background-color: #f9fafb;
   position: sticky;
   top: 0;
   z-index: 10;
@@ -140,23 +140,34 @@
   text-align: left;
   font-weight: 700;
   color: #111;
-  background-color: #f9fafb;
   border: 1px solid #e0e6ec;
   border-left: unset;
   border-bottom: 1px solid #d4d4d4;
 }
 
+/* Checkbox column */
 .col-checkbox {
   width: 50px;
   min-width: 50px;
   max-width: 50px;
-  text-align: center !important;
+  text-align: center;
 }
 
+/**
+ * Table row styling
+ */
 .data-table tbody tr {
   height: 48px;
+  position: relative;
 }
 
+.data-table tbody tr:hover td {
+  background-color: #f2f9ff;
+}
+
+/**
+ * Table cells
+ */
 .data-table tbody td {
   padding: 10px;
   border-top: none;
@@ -166,8 +177,45 @@
   color: #1f1f1f;
 }
 
-.data-table tbody tr:hover td {
-  background-color: #f2f9ff;
+/**
+ * Table row (for positioning context)
+ */
+.table-row {
+  position: relative;
+}
+
+/**
+ * Avatar initials circle
+ * Hình tròn với màu nền đơn sắc (không gradient)
+ */
+.avatar-initials {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #667eea;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 14px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  transition: background-color 0.2s ease;
+}
+
+/* Grid cell layout */
+.grid-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cell-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
 }
 
 .text-primary-bold {
@@ -175,11 +223,53 @@
   color: #1f1f1f;
 }
 
+/**
+ * Candidate status badge
+ */
 .candidate-status {
   color: #48bb56;
   padding-left: 0.25rem;
 }
 
+/**
+ * Row edit icon
+ * Action icon that appears on row hover
+ */
+.row-edit-icon {
+  display: none;
+  position: sticky;
+  top: 100%;
+  right: 8px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #666;
+  padding: 4px;
+  transition: color 0.2s;
+  width: 24px;
+  height: 24px;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  background-color: white;
+  border-radius: 4px;
+}
+
+.row-edit-icon:hover {
+  color: #1E88E5;
+}
+
+.table-row:hover .row-edit-icon {
+  display: inline-flex;
+}
+
+/* ===================================
+   Pagination Section
+   =================================== */
+
+/**
+ * Pagination footer
+ * Bottom bar with page controls
+ */
 .paging-footer {
   height: 46px;
   background-color: #f5f5f5;
@@ -193,6 +283,9 @@
   box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.06);
 }
 
+/**
+ * Page size selector
+ */
 .paging-select {
   height: 36px;
   font-size: 14px;
@@ -202,6 +295,81 @@
   background-color: #ffffff;
 }
 
+.paging-size-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/**
+ * Page size button
+ */
+.paging-size-btn {
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  min-width: 65px;
+  height: 36px;
+  box-sizing: border-box;
+}
+
+.paging-size-btn .ms-button__content {
+  flex: 1;
+  text-align: left;
+  line-height: 1;
+}
+
+.paging-size-btn .ms-button__icon {
+  margin: 0 0 0 4px;
+  width: 12px;
+  height: 12px;
+  min-width: 12px;
+}
+
+.paging-size-menu {
+  position: absolute;
+  top: auto;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+/**
+ * Page size menu item
+ */
+.paging-size-item {
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+  transition: background-color 0.15s;
+  text-align: center;
+}
+
+.paging-size-item:hover {
+  background-color: #f5f5f5;
+}
+
+.paging-size-item--active {
+  background-color: #e8f4fd;
+  color: #1976d2;
+  font-weight: 500;
+}
+
+/**
+ * Navigation buttons
+ */
 .btn-nav {
   width: 24px;
   height: 24px;
@@ -210,4 +378,23 @@
   cursor: pointer;
   margin-left: 4px;
   border-radius: 2px;
+}
+
+/**
+ * Pagination nav buttons
+ */
+.paging-nav-btn {
+  background: none;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+}
+
+.paging-nav-btn:disabled {
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+.paging-nav-btn .ms-button__icon {
+  margin: 0;
 }
