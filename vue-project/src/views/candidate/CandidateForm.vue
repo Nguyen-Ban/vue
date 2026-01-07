@@ -33,8 +33,7 @@
                 <label>Giới tính</label>
                 <select v-model="form.Gender" class="form-control">
                   <option value="">Chọn giới tính</option>
-                  <option value="Nam">Nam</option>
-                  <option value="Nữ">Nữ</option>
+                  <option v-for="opt in GenderOptions" :key="opt.value" :value="opt.value">{{ opt.label }}</option>
                 </select>
               </div>
             </div>
@@ -194,6 +193,8 @@
 import { reactive, computed, watch } from 'vue';
 import { useCandidates } from '../../composables/useCandidates';
 import { useToast } from '../../composables/useToast';
+import { isValidEmail, isValidPhoneVN, missingRequired } from '../../utils/validate';
+import { GenderOptions, CandidateStatus } from '../../commons/enums/enum';
 
 /**
  * Component CandidateForm
@@ -243,7 +244,7 @@ const form = reactive({
   ExperienceEnd: '',
   ExperiencePosition: '',
   ExperienceDescription: '',
-  CandidateStatusName: 'Ứng tuyển'
+  CandidateStatusName: CandidateStatus.APPLYING
 });
 
 function resetForm() {
@@ -330,16 +331,35 @@ function onOverlay(e) { if (e.target === e.currentTarget) close(); }
  * Created By Ban - 01/06/2026
  */
 function save() {
-  // Kiểm tra bắt buộc: họ tên
-  if (!form.CandidateName.trim()) {
-    toast.error('Vui lòng nhập họ tên!');
+  const required = ['CandidateName', 'Email'
+    // 'EducationDegreeName', 'EducationPlaceName', 'EducationMajorName', 'ApplyDate'
+  ];
+  const missing = missingRequired(form, required);
+
+  if (missing.length) {
+    const labels = {
+      CandidateName: 'họ và tên',
+      Email: 'Email',
+      // EducationDegreeName: 'trình độ đào tạo',
+      // EducationPlaceName: 'nơi đào tạo',
+      // EducationMajorName: 'chuyên ngành',
+      // ApplyDate: 'ngày ứng tuyển',
+    };
+    const firstMissing = labels[missing[0]] || missing[0];
+    toast.error(`Vui lòng nhập ${firstMissing}!`);
     return;
   }
-  // Kiểm tra bắt buộc: email
-  if (!form.Email.trim()) {
-    toast.error('Vui lòng nhập Email!');
+
+  if (!isValidEmail(form.Email)) {
+    toast.error('Email không hợp lệ!');
     return;
   }
+
+  if (form.Mobile && !isValidPhoneVN(form.Mobile)) {
+    toast.error('Số điện thoại không hợp lệ!');
+    return;
+  }
+
   // Lưu dữ liệu
   saveCandidate({ ...form });
   // Thông báo thành công
